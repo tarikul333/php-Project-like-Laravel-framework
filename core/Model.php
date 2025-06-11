@@ -8,7 +8,7 @@ class Model
 {
     protected $db;
     protected $table;
-    protected $fillable = [];  // <-- declare fillable fields here in child model
+    protected $fillable = [];
 
     public function __construct()
     {
@@ -32,7 +32,6 @@ class Model
 
     public function create(array $data)
     {
-        // Filter data to only allow fillable columns
         $data = array_filter(
             $data,
             fn($key) => in_array($key, $this->fillable),
@@ -45,8 +44,36 @@ class Model
 
         $columns = implode(", ", array_keys($data));
         $placeholders = rtrim(str_repeat("?, ", count($data)), ", ");
+        $values = array_values($data);
 
         $sql = "INSERT INTO {$this->table} ($columns) VALUES ($placeholders)";
-        return $this->db->query($sql, array_values($data));
+        return $this->db->query($sql, $values);
+    }
+
+    public function update($id, array $data)
+    {
+        $data = array_filter(
+            $data,
+            fn($key) => in_array($key, $this->fillable),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        if (empty($data)) {
+            throw new \Exception("No valid data provided for update.");
+        }
+
+        $setClause = implode(", ", array_map(fn($key) => "$key = ?", array_keys($data)));
+        $values = array_values($data);
+        $values[] = $id;
+
+        $sql = "UPDATE {$this->table} SET {$setClause} WHERE id = ?";
+        return $this->db->query($sql, $values);
+    }
+
+    public function delete($id)
+    {
+        $sql = "DELETE FROM {$this->table} WHERE id = ?";
+        return $this->db->query($sql, [$id]);
     }
 }
+
