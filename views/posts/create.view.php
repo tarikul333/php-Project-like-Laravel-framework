@@ -1,18 +1,36 @@
-<?php require basePath('views/components/header.php'); ?>
-<?php require basePath('views/components/nav.php'); ?>
-
+<?php
+session_start();
+require basePath('views/components/header.php');
+require basePath('views/components/nav.php');
+?>
 <main class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded shadow">
     <h2 class="text-2xl font-bold mb-4">Create a New Post</h2>
-    <form action="/post/store" method="POST" class="space-y-4">
-        <input type="text" name="user_name" placeholder="Your Name" class="w-full px-4 py-2 border rounded" required>
+    <form method="POST" action="/post/store" class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium">User Name</label>
+            <input type="text" name="user_name" class="border p-2 w-full rounded" value="<?= htmlspecialchars($old['user_name'] ?? '') ?>">
+            <?php if (!empty($errors['user_name'])): ?>
+                <p class="text-red-500 text-sm"><?= $errors['user_name'] ?></p>
+            <?php endif; ?>
+        </div>
 
-        <input type="text" name="title" placeholder="Post Title" class="w-full px-4 py-2 border rounded" required>
+        <div>
+            <label class="block text-sm font-medium">Title</label>
+            <input type="text" name="title" class="border p-2 w-full rounded" value="<?= htmlspecialchars($old['title'] ?? '') ?>">
+            <?php if (!empty($errors['title'])): ?>
+                <p class="text-red-500 text-sm"><?= $errors['title'] ?></p>
+            <?php endif; ?>
+        </div>
 
-        <textarea name="body" rows="6" placeholder="Write your post here..." class="w-full px-4 py-2 border rounded" required></textarea>
+        <div>
+            <label class="block text-sm font-medium">Body</label>
+            <textarea name="body" class="border p-2 w-full rounded"><?= htmlspecialchars($old['body'] ?? '') ?></textarea>
+            <?php if (!empty($errors['body'])): ?>
+                <p class="text-red-500 text-sm"><?= $errors['body'] ?></p>
+            <?php endif; ?>
+        </div>
 
-        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-            Publish Post
-        </button>
+        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit</button>
     </form>
 </main>
 

@@ -1,6 +1,7 @@
 <?php
-    require 'components/header.php';
-    require 'components/nav.php';
+session_start();
+require 'components/header.php';
+require 'components/nav.php';
 ?>
 <!-- Header -->
 <header class="bg-white shadow-md p-4 sticky top-0 z-03">

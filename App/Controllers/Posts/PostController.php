@@ -3,6 +3,7 @@
 namespace App\Controllers\Posts;
 
 use App\Models\Post;
+use Core\Validator;
 
 class PostController
 {
@@ -21,8 +22,22 @@ class PostController
         require basePath('views/posts/create.view.php');
     }
 
+
     public function store()
     {
+        $validator = new Validator($_POST, [
+            'user_name' => 'required',
+            'title'     => 'required|max:100',
+            'body'      => 'required|max:1000'
+        ]);
+
+        if ($validator->fails()) {
+            return view('posts/create.view.php', [
+                'errors' => $validator->errors(),
+                'old' => $_POST
+            ]);
+        }
+
         $post = new Post();
         $post->create([
             'user_name' => $_POST['user_name'],

@@ -19,17 +19,23 @@
             <a href="/posts" class="block py-2 md:inline-block md:py-0 <?= $currentUri === '/posts' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500' ?>">Post</a>
         </nav>
 
-
-        <!-- Icons -->
-        <div class="flex space-x-2 md:absolute md:right-0">
-            <button class="bg-gray-100 rounded-full p-2 text-gray-500 hover:text-gray-700 focus:outline-none">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 14v1m-6-6h1m14-6h1m-6 10h1m-6-10h-1m10 6h-1m-6-10v14m6-6h-1"></path>
-                </svg>
-            </button>
+        <!-- Icons and Auth Buttons -->
+        <div class="flex space-x-2 items-center md:absolute md:right-0">
+            <!-- Profile Picture -->
             <button class="bg-gray-100 rounded-full p-1 text-gray-500 hover:text-gray-700 focus:outline-none">
-                <img src="images/pp.jpg" alt="Profile Picture" class="w-7 h-7 object-cover rounded-full">
+                <img src="/images/pp.jpg" alt="Profile Picture" class="w-7 h-7 object-cover rounded-full">
             </button>
+
+            <!-- Auth Buttons -->
+            <?php if (!isset($_SESSION['user'])): ?>
+                <a href="/login" class="text-gray-700 hover:text-blue-600 text-sm font-medium px-3 py-1 border border-gray-300 rounded hover:border-blue-600 transition">Login</a>
+                <a href="/register" class="bg-blue-600 text-white text-sm font-medium px-3 py-1 rounded hover:bg-blue-700 transition">Register</a>
+            <?php else: ?>
+                <span class="text-sm font-semibold text-blue-600 px-3 py-1 bg-blue-50 rounded-full">
+                    <?= htmlspecialchars($_SESSION['user']['email']) ?>
+                </span>
+                <a href="/logout" class="text-sm font-medium text-red-600 hover:text-red-800 px-3 py-1 border border-red-300 rounded hover:border-red-500 transition">Logout</a>
+            <?php endif; ?>
         </div>
     </div>
 </header>

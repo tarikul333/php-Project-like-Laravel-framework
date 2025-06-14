@@ -1,6 +1,7 @@
 <?php
-    require 'components/header.php';
-    require 'components/nav.php';
+session_start();
+require 'components/header.php';
+require 'components/nav.php';
 ?>
 
 <!-- Main Content (Loaded via Router) -->
@@ -42,5 +43,5 @@
 </section>
 
 <?php
-    require 'components/footer.php';
+require 'components/footer.php';
 ?>

@@ -30,6 +30,12 @@ class Model
         return $this->db->fetch("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
     }
 
+    public function findByEmail($email)
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE email = ?";
+        return $this->db->fetch($sql, [$email]);
+    }
+
     public function create(array $data)
     {
         $data = array_filter(
@@ -76,4 +82,3 @@ class Model
         return $this->db->query($sql, [$id]);
     }
 }
-

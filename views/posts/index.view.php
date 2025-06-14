@@ -1,5 +1,8 @@
-<?php require basePath('views/components/header.php'); ?>
-<?php require basePath('views/components/nav.php'); ?>
+<?php
+session_start();
+require basePath('views/components/header.php');
+require basePath('views/components/nav.php');
+?>
 
 <main class="max-w-4xl mx-auto mt-10 space-y-6">
     <div class="flex items-center justify-between mb-4">

@@ -17,3 +17,4 @@ Router::get('/posts', [PostController::class, 'index']);
 Router::get('/post/create', [PostController::class, 'create']);
 Router::post('/post/store', [PostController::class, 'store']);
 
+require "auth.php";

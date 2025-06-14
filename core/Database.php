@@ -32,7 +32,8 @@ class Database
     public function query($sql, $params = [])
     {
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute($params) ? $stmt : false;
+        $stmt->execute($params);
+        return $stmt;
     }
 
     public function fetch($sql, $params = [])

@@ -36,9 +36,9 @@ class Router
         self::add($uri, $controller, 'DELETE');
     }
 
-    public function route($uri, $method)
+    public static function route($uri, $method)
     {
-        foreach (static::$routes as $route) {
+        foreach (self::$routes as $route) {
             if ($route['url'] === $uri && $route['method'] === strtoupper($method)) {
                 $controller = $route['controller'];
 
@@ -52,10 +52,10 @@ class Router
             }
         }
 
-        $this->abort();
+        self::abort();
     }
 
-    protected function abort($code = '404')
+    protected static function abort($code = '404')
     {
         http_response_code(404);
         die();
