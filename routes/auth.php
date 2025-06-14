@@ -1,8 +1,8 @@
 <?php
 
+use Core\Router;
 use App\Controllers\Auth\LoginController;
 use App\Controllers\Auth\RegisterController;
-use Core\Router;
 
 Router::get('/register', [RegisterController::class, 'index']);
 Router::post('/register', [RegisterController::class, 'store']);
