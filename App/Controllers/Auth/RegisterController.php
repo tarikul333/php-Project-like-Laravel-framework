@@ -40,6 +40,7 @@ class RegisterController
         session_start();
         $_SESSION['success'] = "Registration successful! Please login.";
 
+        
         header('Location: /register');
         exit;
     }

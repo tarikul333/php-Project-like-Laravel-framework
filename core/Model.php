@@ -9,6 +9,7 @@ class Model
     protected $db;
     protected $table;
     protected $fillable = [];
+    protected $relations;
 
     public function __construct()
     {
@@ -35,6 +36,30 @@ class Model
         $sql = "SELECT * FROM {$this->table} WHERE email = ?";
         return $this->db->fetch($sql, [$email]);
     }
+
+    public function with($relation)
+    {
+        if (!isset($this->relations[$relation])) {
+            throw new \Exception("Relation {$relation} not defined.");
+        }
+
+        $config = $this->relations[$relation];
+
+        $relatedTable = $config['table'];
+        $foreignKey   = $config['foreignKey'];
+        $ownerKey     = $config['ownerKey'] ?? 'id';
+        $selectField  = $config['select'] ?? '*';
+        $asField      = $config['as'] ?? $selectField;
+
+        $sql = "SELECT {$this->table}.*, {$relatedTable}.{$selectField} AS {$asField}
+            FROM {$this->table}
+            JOIN {$relatedTable}
+              ON {$this->table}.{$foreignKey} = {$relatedTable}.{$ownerKey}
+            ORDER BY {$this->table}.created_at DESC";
+
+        return $this->db->fetchAll($sql);
+    }
+
 
     public function create(array $data)
     {

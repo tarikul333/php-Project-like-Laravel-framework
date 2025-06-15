@@ -9,8 +9,8 @@ class PostController
 {
     public function index()
     {
-        $postModel = new Post();
-        $posts = $postModel->all();
+        $post = new Post();
+        $posts = $post->with('user');
 
         return view('posts/index.view.php', [
             'title' => 'Post',
@@ -26,7 +26,6 @@ class PostController
     public function store()
     {
         $validator = new Validator($_POST, [
-            'user_name' => 'required',
             'title'     => 'required|max:100',
             'body'      => 'required|max:1000'
         ]);
@@ -38,13 +37,24 @@ class PostController
             ]);
         }
 
+        session_start();
+
+        if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
+            $_SESSION['error'] = 'You must be logged in to create a post.';
+            header('Location: /login');
+            exit;
+        }
+
+        $user_id = $_SESSION['user']['id'];
+
         $post = new Post();
         $post->create([
-            'user_name' => $_POST['user_name'],
-            'title' => $_POST['title'],
-            'body' => $_POST['body']
+            'user_id' => $user_id,
+            'title'   => $_POST['title'],
+            'body'    => $_POST['body']
         ]);
 
+        $_SESSION['success'] = 'Post created successfully!';
         header('Location: /posts');
         exit;
     }

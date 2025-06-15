@@ -53,7 +53,7 @@ require basePath('views/components/nav.php');
             <!-- Submit Button -->
             <button type="submit"
                 class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
-                Register
+                Login
             </button>
         </form>
     </div>

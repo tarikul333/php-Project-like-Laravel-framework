@@ -15,7 +15,7 @@ require basePath('views/components/nav.php');
     <?php foreach ($posts as $post): ?>
         <div class="bg-white p-6 rounded shadow">
             <h2 class="text-xl font-semibold text-blue-700"><?= htmlspecialchars($post['title']) ?></h2>
-            <p class="text-gray-600 text-sm">By <?= htmlspecialchars($post['user_name']) ?> on <?= $post['created_at'] ?></p>
+            <p class="text-gray-600 text-sm">By <?= htmlspecialchars($post['user_email']) ?> on <?= $post['created_at'] ?></p>
             <p class="mt-3 text-gray-800"><?= nl2br(htmlspecialchars($post['body'])) ?></p>
 
             <!-- Comment form -->

@@ -37,9 +37,9 @@ class LoginController
                 'old' => $_POST
             ]);
         }
-
         session_start();
         $_SESSION['user'] = [
+            'id' => $user['id'],
             'email' => $user['email'],
         ];
 

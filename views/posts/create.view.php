@@ -3,17 +3,9 @@ session_start();
 require basePath('views/components/header.php');
 require basePath('views/components/nav.php');
 ?>
-<main class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded shadow">
+<main class="max-w-2xl mx-auto my-24 bg-white p-6 rounded shadow">
     <h2 class="text-2xl font-bold mb-4">Create a New Post</h2>
     <form method="POST" action="/post/store" class="space-y-4">
-        <div>
-            <label class="block text-sm font-medium">User Name</label>
-            <input type="text" name="user_name" class="border p-2 w-full rounded" value="<?= htmlspecialchars($old['user_name'] ?? '') ?>">
-            <?php if (!empty($errors['user_name'])): ?>
-                <p class="text-red-500 text-sm"><?= $errors['user_name'] ?></p>
-            <?php endif; ?>
-        </div>
-
         <div>
             <label class="block text-sm font-medium">Title</label>
             <input type="text" name="title" class="border p-2 w-full rounded" value="<?= htmlspecialchars($old['title'] ?? '') ?>">
