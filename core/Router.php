@@ -11,35 +11,60 @@ class Router
         static::$routes[] = [
             'url' => $uri,
             'controller' => $controller,
-            'method' => $method
+            'method' => $method,
+            'middleware' => null
         ];
+
+        return new static();
     }
 
     public static function get($uri, $controller)
     {
-        self::add($uri, $controller, 'GET');
+        return self::add($uri, $controller, 'GET');
     }
     public static function post($uri, $controller)
     {
-        self::add($uri, $controller, 'POST');
+        return self::add($uri, $controller, 'POST');
     }
     public static function put($uri, $controller)
     {
-        self::add($uri, $controller, 'PUT');
+        return self::add($uri, $controller, 'PUT');
     }
     public static function patch($uri, $controller)
     {
-        self::add($uri, $controller, 'PATCH');
+        return self::add($uri, $controller, 'PATCH');
     }
     public static function delete($uri, $controller)
     {
-        self::add($uri, $controller, 'DELETE');
+        return self::add($uri, $controller, 'DELETE');
     }
+
+    public function only($key)
+    {
+        self::$routes[array_key_last(self::$routes)]['middleware'] = $key;
+    }
+
+    protected static function checkMiddleware($middleware)
+    {
+        if ($middleware === 'guest' && isset($_SESSION['user'])) {
+            header('location: /posts');
+            exit;
+        }
+
+        if ($middleware === 'auth' && !isset($_SESSION['user'])) {
+            header('location: /login');
+            exit;
+        }
+    }
+
 
     public static function route($uri, $method)
     {
         foreach (self::$routes as $route) {
             if ($route['url'] === $uri && $route['method'] === strtoupper($method)) {
+
+                self::checkMiddleware($route['middleware']);
+
                 $controller = $route['controller'];
 
                 if (is_array($controller)) {

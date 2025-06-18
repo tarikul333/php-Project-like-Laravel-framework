@@ -1,5 +1,4 @@
 <?php
-session_start();
 require basePath('views/components/header.php');
 require basePath('views/components/nav.php');
 ?>
