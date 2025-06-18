@@ -16,7 +16,10 @@
             <a href="/about" class="block py-2 md:inline-block md:py-0 <?= $currentUri === '/about' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500' ?>">About</a>
             <a href="/articles" class="block py-2 md:inline-block md:py-0 <?= $currentUri === '/articles' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500' ?>">Articles</a>
             <a href="/projects" class="block py-2 md:inline-block md:py-0 <?= $currentUri === '/projects' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500' ?>">Projects</a>
-            <a href="/posts" class="block py-2 md:inline-block md:py-0 <?= $currentUri === '/posts' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500' ?>">Post</a>
+            
+            <?php if (isset($_SESSION['user'])) : ?>
+                <a href="/posts" class="block py-2 md:inline-block md:py-0 <?= $currentUri === '/posts' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500' ?>">Post</a>
+            <?php endif; ?>
         </nav>
 
         <!-- Icons and Auth Buttons -->
